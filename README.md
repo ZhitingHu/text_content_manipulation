@@ -1,4 +1,4 @@
-#Paired NBA Record-Sentence Dataset
+# Paired NBA Record-Sentence Dataset
 
 This dataset is first proposed and made in [Toward Unsupervised Text Content Manipulation](https://arxiv.org/abs/1901.09501) (Wang, Hu, et al.).
 
