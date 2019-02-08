@@ -9,29 +9,29 @@ Wentao Wang*, Zhiting Hu*, Zichao Yang, Haoran Shi, Frank Xu, Eric P. Xing; 2019
 
 Each example in the dataset consists of four elements, namely, `(x, y_aux, x_ref, y_ref)`, where
 
-* `x` is a content record containing a set of data tuples `x={x_i}`. Each tuple `x_i` contains three fields `(type, value, associated)`. For example, `x_i = (TEAM-AST, 25, Boston)` means *"The Boston got 25 team assists"*. More specifically,
+* `x` is a content record containing a set of data tuples `x = {x_i}`. Each tuple `x_i` contains three fields `(type, value, associated)`. For example, `x_i = (TEAM-AST, 25, Boston)` means *"The Boston got 25 team assists"*. More specifically,
 
-    - `type`: data type of the tuple, e.g., `TEAM-AST`, `PLAYER-PTS`, etc. There are 34 data types in total. See the file [x_type.vocab.txt](.) for all data types.
+    - `type`: data type of the tuple, e.g., `TEAM-AST`, `PLAYER-PTS`, etc. There are 34 data types in total. See the file [x_type.vocab.txt](x_type.vocab.txt) for all data types.
     - `value`: value of the data. Usually a scalar number or a string (e.g., a player's name).
     - `associated`: the associated team or player of the tuple. 
     
-    The above three fields of each `x` instance are stored in three parallel files, respectively. For example, each line in the file `train/x_type.train.txt` contains data types of all tuples in each `x` training instance. Data types are separated by white spaces. For example, the first line in `train/x_type.train.txt` is `TEAM_NAME TEAM-AST TEAM-AST TEAM_NAME`, meaning that there are 4 tuples in the frist `x` instance, each of which has the respective type.
+    The above three fields of each `x` instance are stored in three parallel files, respectively. For example, each line in the file `train/x_type.train.txt` contains data types of all tuples in each `x` training instance. Data types are separated by white spaces. For example, the first line in `train/x_type.train.txt` is `TEAM_NAME TEAM-AST TEAM-AST TEAM_NAME`, meaning that there are 4 tuples in the first `x` instance, each of which has the respective type.
     
 * `y_aux` is the auxiliary sentence describing the content of `x`. 
 
-* `x_ref` is the content record of reference sentence `y_ref`, in the same format as `x`. During data construction, we have guaranteed `x_ref` has a similar structure with `x`, but has a differnet number of tuples or has different values or types.
+* `x_ref` is the content record of reference sentence `y_ref`, in the same format as `x`. During data construction, we have guaranteed `x_ref` has a similar structure with `x`, but has a different number of tuples or has different values or types.
 
-* `y_ref` the a reference sentence that defines the desired writing style of output sentence.
+* `y_ref` is the reference sentence that defines the desired writing style of output sentence.
 
 ## Data Files
 
-* The dataset is splitted into train/val/test sets, each in corresponding folder, respectively.
+* The dataset is split into train/val/test sets, each in corresponding folder, respectively.
 
 * The four elements `(x, y_aux, x_ref, y_ref)` of each example are stored in parallel files, respectively. For example, each line of `train/y_aux.train.txt` is an auxiliary sentence of the respective data example. 
 
-  As explained above, three fields of `x` are saperately stored in three files, namely, (taking training data for example), `x_type.train.txt`, `x_value.train.txt`, and `x_associated.train.txt`, respectively. `x_ref` is stored in the same format, in files like `x_ref_type.train.txt`.
+  As explained above, three fields of `x` are separately stored in three files, namely, (taking training data for example), `x_type.train.txt`, `x_value.train.txt`, and `x_associated.train.txt`, respectively. `x_ref` is stored in the same format, in files like `x_ref_type.train.txt`.
 
-* The vocabulary file `all.vocab.txt` contains all words that have occured in the dataset. `x_type.vocab.txt`, `x_value.vocab.txt`, and `x_associated.vocab.txt` are the vacabulary of the 'type', 'value', and 'assoicated' fields of both `x` and `x_ref`.
+* The vocabulary file `all.vocab.txt` contains all words that have occurred in the dataset. `x_type.vocab.txt`, `x_value.vocab.txt`, and `x_associated.vocab.txt` are the vocabulary of the 'type', 'value', and 'associated' fields of both `x` and `x_ref`.
 
 
 ## Data Statistics
@@ -61,8 +61,6 @@ The original dataset consists of (table, paragraph) pairs. We first split each d
 
 We next use a retrieval method to retrieve from the *training* set a `(x_ref, y_ref)` pair for each of the above `(x, y_aux)` pairs. In particular, as mentioned above, we want to guarantee `x_ref` has a similar but not exact the same content with `x`. Formally, we use the following criteria for retrieval:
 
-<a href="https://www.codecogs.com/eqnedit.php?latex=(x',&space;y')&space;=&space;\arg\min_{(x'',&space;y'')&space;\in&space;\text{train&space;set}&space;\mid&space;J(x,&space;x'')&space;\neq&space;1}&space;|J(x,&space;x'')&space;-&space;1|" target="_blank"><img src="https://latex.codecogs.com/gif.latex?(x',&space;y')&space;=&space;\arg\min_{(x'',&space;y'')&space;\in&space;\text{train&space;set}&space;\mid&space;J(x,&space;x'')&space;\neq&space;1}&space;|J(x,&space;x'')&space;-&space;1|" title="(x', y') = \arg\min_{(x'', y'') \in \text{train set} \mid J(x, x'') \neq 1} |J(x, x'') - 1|" /></a>
+<a href="https://www.codecogs.com/eqnedit.php?latex=(x',&space;y')&space;=&space;\arg\max_{(x'',&space;y'')&space;\in&space;\text{train&space;set}&space;\mid&space;J(types(x),&space;types(x''))&space;<&space;1}&space;J(types(x),&space;types(x''))" target="_blank"><img src="https://latex.codecogs.com/gif.latex?(x',&space;y')&space;=&space;\arg\max_{(x'',&space;y'')&space;\in&space;\text{train&space;set}&space;\mid&space;J(types(x),&space;types(x''))&space;<&space;1}&space;J(types(x),&space;types(x''))" title="(x', y') = \arg\max_{(x'', y'') \in \text{train set} \mid J(types(x), types(x'')) < 1} J(types(x), types(x''))" /></a>
 
-where `J(A, B)` is the Jaccard index between two sets A and B.
-
-
+where `types(A) = {type for (type, value, associated) in A} ` for a set of records and `J(A, B)` is the Jaccard index between two sets A and B. The larger `J(A, B)` is, the closer A and B are. We merely compare the similarity of `x` and `x'` on their types, because the types are their most significant features. When `J(A, B) = 1`, A is exactly the same as B, otherwise there is some difference between them. Therefore, our criteria finds `x''` most similar to `x` but not exactly the same.
