@@ -14,9 +14,11 @@ Each example in the dataset consists of four elements, namely, `(x, y_aux, x_ref
     - `type`: data type of the tuple, e.g., `TEAM-AST`, `PLAYER-PTS`, etc. There are 34 data types in total. See the file [x_type.vocab.txt](x_type.vocab.txt) for all data types.
     - `value`: value of the data. Usually a scalar number or a string (e.g., a player's name).
     - `associated`: the associated team or player of the tuple. 
-    
+
     The above three fields of each `x` instance are stored in three parallel files, respectively. For example, each line in the file `train/x_type.train.txt` contains data types of all tuples in each `x` training instance. Data types are separated by white spaces. For example, the first line in `train/x_type.train.txt` is `TEAM_NAME TEAM-AST TEAM-AST TEAM_NAME`, meaning that there are 4 tuples in the first `x` instance, each of which has the respective type.
-    
+
+    We also provide joined files of `x`. For example, each line in `train/x.joined.train.txt` contains all tuples in each `x` training instance. In each tuple, the three fields are joined, separated by `|`. For example, the first line in `train/x.joined.train.txt` is `Boston|TEAM_NAME|Boston 25|TEAM-AST|Boston 11|TEAM-AST|New_York New_York|TEAM_NAME|New_York`. These files are simply joined from the separated files, and only used when evaluating the results.
+
 * `y_aux` is the auxiliary sentence describing the content of `x`. 
 
 * `x_ref` is the content record of reference sentence `y_ref`, in the same format as `x`. During data construction, we have guaranteed `x_ref` has a similar structure with `x`, but has a different number of tuples or has different values or types.
@@ -29,9 +31,9 @@ Each example in the dataset consists of four elements, namely, `(x, y_aux, x_ref
 
 * The four elements `(x, y_aux, x_ref, y_ref)` of each example are stored in parallel files, respectively. For example, each line of `train/y_aux.train.txt` is an auxiliary sentence of the respective data example. 
 
-  As explained above, three fields of `x` are separately stored in three files, namely, (taking training data for example), `x_type.train.txt`, `x_value.train.txt`, and `x_associated.train.txt`, respectively. `x_ref` is stored in the same format, in files like `x_ref_type.train.txt`.
+  As explained above, three fields of `x` are separately stored in three files, namely, (taking training data for example), `x_type.train.txt`, `x_value.train.txt`, and `x_associated.train.txt`, respectively. Also, joined tuples of `x` are stored in a single file, namely, (again taking training data for example), `x.joined.train.txt`.  `x_ref` is stored in the same format, in files like `x_ref_type.train.txt` or `x_ref.joined.train.txt`.
 
-* The vocabulary file `all.vocab.txt` contains all words that have occurred in the dataset. `x_type.vocab.txt`, `x_value.vocab.txt`, and `x_associated.vocab.txt` are the vocabulary of the 'type', 'value', and 'associated' fields of both `x` and `x_ref`.
+* The vocabulary file `y.vocab.txt` contains all words that have occurred in `y_aux` and `y_ref`. `x_type.vocab.txt`, `x_value.vocab.txt`, and `x_associated.vocab.txt` are the vocabulary of the 'type', 'value', and 'associated' fields of both `x` and `x_ref`.
 
 
 ## Data Statistics
