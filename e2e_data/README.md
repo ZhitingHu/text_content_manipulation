@@ -1,4 +1,4 @@
-# E2E Restaurant Dataset for Text Content Manipulation
+# E2E Restaurant Dataset for Data-to-Text Generation with Style Imitation
 
 # Data Format  
 
