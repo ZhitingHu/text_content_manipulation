@@ -7,6 +7,6 @@ This repo contains the datasets of the following paper:
 *Shuai Lin, Wentao Wang, Zichao Yang, Xiaodan Liang, Eric P. Xing, Zhiting Hu.*
 *Findings of EMNLP 2020* 
 
-[Link to Paper] (Coming soon!)
+[Link to Paper] (https://arxiv.org/abs/1901.09501)
 
 [Link to Code](https://github.com/ha-lins/DTG-SI)
