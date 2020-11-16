@@ -1,0 +1,8 @@
+area
+customerRating
+eatType
+familyFriendly
+food
+name
+near
+priceRange
